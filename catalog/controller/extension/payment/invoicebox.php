@@ -25,8 +25,8 @@ class ControllerExtensionPaymentInvoicebox extends Controller {
 				$data['products'][] = array(
 					'name'     => htmlspecialchars($product['name']),
 					'price'    => $this->currency->format($product['price'], $order_info['currency_code'], false, false),
-					'quantity' => $product['quantity']
-					
+					'quantity' => $product['quantity'],
+					'vatrate' => $this->tax->getTax( $product['price'], $product['tax_class_id'])
 				);
 				$quantity +=$product['quantity'];
 			}
@@ -35,7 +35,8 @@ class ControllerExtensionPaymentInvoicebox extends Controller {
 				$data['products'][] = array(
 					'name'     => htmlspecialchars($order_info['shipping_method']),
 					'price'    => $this->currency->format($order_info['total'] - $subtotal, $order_info['currency_code'], false, false),
-					'quantity' => 1	
+					'quantity' => 1,
+					'vatrate' => 0
 				);
 			}
 			
@@ -118,15 +119,6 @@ class ControllerExtensionPaymentInvoicebox extends Controller {
 		}; 
 		$amount 	= $this->currency->format(trim($this->request->post["amount"]), $order_info['currency_code'], false, false);
 		$total = $this->currency->format($order_info['total'], $order_info['currency_code'], false, false);
-		$log =  "sign_strA = $sign_strA \n"; 
-		$log .=  "sign_crcA = $sign_crcA \n";
-		$log .= "sign      = $sign \n";
-        $log .= "agentName      = $agentName \n";
-        $log .= "total      =  $total \n";
-        $log .= "amount      = $amount \n";
-		
-		$log .= print_r($this->request->post,1)." \n";
-        file_put_contents(dirname(__FILE__)."/invoicebox_log.log", $log, FILE_APPEND);
 		
 		if ($total == $amount){
 		  $this->model_checkout_order->addOrderHistory((int) $order_id, $this->config->get('invoicebox_order_status_completed'));

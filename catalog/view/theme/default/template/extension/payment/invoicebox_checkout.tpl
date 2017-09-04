@@ -27,7 +27,9 @@
    <input type="hidden" name="itransfer_item<?php echo $i; ?>_name" value="<?php echo $product['name']; ?>" />
    <input type="hidden" name="itransfer_item<?php echo $i; ?>_quantity" value="<?php echo $product['quantity']; ?>" />
    <input type="hidden" name="itransfer_item<?php echo $i; ?>_price" value="<?php echo $product['price']; ?>" />
-	<?php } ?>
+   <input type="hidden" name="itransfer_item<?php echo $i; ?>_vatrate" value="<?php echo $product['vatrate']; ?>" />
+   <input type=”hidden” name=”itransfer_item<?php echo $i; ?>_measure” value=”шт.” />
+   <?php } ?>
    <div class="buttons">
     <div class="pull-right">
       <input type="submit" value="<?php echo $button_confirm; ?>" class="btn btn-primary" />
