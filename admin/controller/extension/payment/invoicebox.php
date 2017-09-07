@@ -4,7 +4,6 @@ class ControllerExtensionPaymentInvoicebox extends Controller
     private $error = array();
 
     
-
     public function index()
     {
         $data = array();
@@ -38,10 +37,11 @@ class ControllerExtensionPaymentInvoicebox extends Controller
 
         $data['heading_title'] = $this->language->get('heading_title');
 
-        $data['terminal_key_label'] = $this->language->get('terminal_key');
-        $data['secret_key_label'] = $this->language->get('secret_key');
-        $data['currency_label'] = $this->language->get('currency');
-        $data['payment_url_label'] = $this->language->get('payment_url');
+        $data['invoicebox_participant_id_label'] = $this->language->get('invoicebox_participant_id');
+        $data['invoicebox_participant_ident_label'] = $this->language->get('invoicebox_participant_ident');
+        $data['invoicebox_api_key_label'] = $this->language->get('invoicebox_api_key');
+		$data['invoicebox_testmode_label'] = $this->language->get('invoicebox_testmode');
+		
         $data['description_label'] = $this->language->get('description');
         $data['status_label'] = $this->language->get('status');
         $data['status_success_label'] = $this->language->get('status_success');
@@ -50,12 +50,10 @@ class ControllerExtensionPaymentInvoicebox extends Controller
         $data['button_save'] = $this->language->get('button_save');
         $data['button_cancel'] = $this->language->get('button_cancel');
 
-        $data['status_authorized'] = $this->language->get('status_authorized');
+        $data['entry_sort_order'] = $this->language->get('entry_sort_order');
         $data['status_completed'] = $this->language->get('status_completed');
         $data['status_canceled'] = $this->language->get('status_canceled');
-        $data['status_rejected'] = $this->language->get('status_rejected');
-        $data['status_refunded'] = $this->language->get('status_refunded');
-
+        
         $data['breadcrumbs'] = array();
 
         $data['breadcrumbs'][] = array(
@@ -80,21 +78,24 @@ class ControllerExtensionPaymentInvoicebox extends Controller
         $data['action'] = $this->url->link('extension/payment/invoicebox', 'token=' . $this->session->data['token'], 'SSL');
         $data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], 'SSL');
 
-        $data['invoicebox_terminal_key'] = isset($this->request->post['invoicebox_terminal_key']) ? $this->request->post['invoicebox_terminal_key'] : $this->config->get('invoicebox_terminal_key');
-        $data['invoicebox_secret_key'] = isset($this->request->post['invoicebox_secret_key']) ? $this->request->post['invoicebox_secret_key'] : $this->config->get('invoicebox_secret_key');
-        $data['currency'] = isset($this->request->post['currency']) ? $this->request->post['currency'] : $this->config->get('currency');
-        $data['invoicebox_payment_url'] = isset($this->request->post['pinvoicebox_ayment_url']) ? $this->request->post['invoicebox_payment_url'] : $this->config->get('invoicebox_payment_url');
+        $data['invoicebox_participant_id'] = isset($this->request->post['invoicebox_participant_id']) ? $this->request->post['invoicebox_participant_id'] : $this->config->get('invoicebox_participant_id');
+        $data['invoicebox_participant_ident'] = isset($this->request->post['invoicebox_participant_ident']) ? $this->request->post['invoicebox_participant_ident'] : $this->config->get('invoicebox_participant_ident');
+        $data['invoicebox_api_key'] = isset($this->request->post['invoicebox_api_key']) ? $this->request->post['invoicebox_api_key'] : $this->config->get('invoicebox_api_key');
+        $data['invoicebox_sort_order'] = isset($this->request->post['invoicebox_sort_order']) ? $this->request->post['invoicebox_sort_order'] : $this->config->get('invoicebox_sort_order');
+		$data['invoicebox_testmode'] = isset($this->request->post['invoicebox_testmode']) ? $this->request->post['invoicebox_testmode'] : $this->config->get('invoicebox_testmode');
         $data['description'] = isset($this->request->post['description']) ? $this->request->post['description'] : $this->config->get('description');
         $data['invoicebox_status'] = isset($this->request->post['invoicebox_status']) ? $this->request->post['invoicebox_status'] : $this->config->get('invoicebox_status');
         $data['order_status_success_id'] = isset($this->request->post['order_status_success_id']) ? $this->request->post['order_status_success_id'] : $this->config->get('order_status_success_id');
         $data['order_status_failed_id'] = isset($this->request->post['order_status_failed_id']) ? $this->request->post['order_status_failed_id'] : $this->config->get('order_status_failed_id');
 
-        $data['invoicebox_order_status_authorized'] = isset($this->request->post['invoicebox_order_status_authorized']) ? $this->request->post['invoicebox_order_status_authorized'] : $this->config->get('invoicebox_order_status_authorized');
         $data['invoicebox_order_status_completed'] = isset($this->request->post['invoicebox_order_status_completed']) ? $this->request->post['invoicebox_order_status_completed'] : $this->config->get('invoicebox_order_status_completed');
         $data['invoicebox_order_status_canceled'] = isset($this->request->post['invoicebox_order_status_canceled']) ? $this->request->post['invoicebox_order_status_canceled'] : $this->config->get('invoicebox_order_status_canceled');
-        $data['invoicebox_order_status_rejected'] = isset($this->request->post['invoicebox_order_status_rejected']) ? $this->request->post['invoicebox_order_status_rejected'] : $this->config->get('invoicebox_order_status_rejected');
-        $data['invoicebox_order_status_refunded'] = isset($this->request->post['invoicebox_order_status_refunded']) ? $this->request->post['invoicebox_order_status_refunded'] : $this->config->get('invoicebox_order_status_refunded');
-
+        
+		if (isset($this->request->post['invoicebox_sort_order'])) {
+			$data['invoicebox_sort_order'] = $this->request->post['invoicebox_sort_order'];
+		} else {
+			$data['invoicebox_sort_order'] = $this->config->get('invoicebox_sort_order');
+		}
 
         $this->load->model('localisation/order_status');
 
@@ -119,21 +120,19 @@ class ControllerExtensionPaymentInvoicebox extends Controller
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
-        if (empty($this->request->post['invoicebox_terminal_key'])) {
-            $this->error['invoicebox_terminal_key'] = $this->language->get('error_terminal_key');
+        if (empty($this->request->post['invoicebox_participant_id'])) {
+            $this->error['invoicebox_participant_id'] = $this->language->get('error_invoicebox_participant_id');
         }
 
-        if (empty($this->request->post['invoicebox_secret_key'])) {
-            $this->error['invoicebox_secret_key'] = $this->language->get('error_secret_key');
+        if (empty($this->request->post['invoicebox_participant_ident'])) {
+            $this->error['invoicebox_participant_ident'] = $this->language->get('error_invoicebox_participant_ident');
         }
 
-        if (empty($this->request->post['invoicebox_payment_url'])) {
-            $this->error['invoicebox_payment_url'] = $this->language->get('error_payment_url');
+        if (empty($this->request->post['invoicebox_api_key'])) {
+            $this->error['invoicebox_api_key'] = $this->language->get('error_invoicebox_api_key');
         }
-//
-//        if (empty($this->request->post['currency'])) {
-//            $this->error['currency'] = $this->language->get('error_currency');
-//        }
+
+       
 
         if (!$this->error) {
             return true;
