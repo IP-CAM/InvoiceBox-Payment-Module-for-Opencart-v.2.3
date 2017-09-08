@@ -1,5 +1,7 @@
 <?php
-class ControllerExtensionPaymentInvoicebox extends Controller {
+
+class ControllerExtensionPaymentInvoicebox extends Controller
+{
 	  
   public function index() {
     
