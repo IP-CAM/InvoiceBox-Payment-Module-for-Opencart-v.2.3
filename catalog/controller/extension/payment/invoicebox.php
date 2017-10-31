@@ -1,7 +1,5 @@
 <?php
-
-class ControllerExtensionPaymentInvoicebox extends Controller
-{
+class ControllerExtensionPaymentInvoicebox extends Controller {
 	  
   public function index() {
     
@@ -74,6 +72,8 @@ class ControllerExtensionPaymentInvoicebox extends Controller
   }
   
   public function callback() {
+	$participantId = false;
+	$participantOrderId = false;
 	if (isset($this->request->post['participantId'])) {
 		$participantId 		= IntVal($this->request->post["participantId"]);
 	}
