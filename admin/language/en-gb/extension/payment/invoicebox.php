@@ -15,7 +15,7 @@ $_['invoicebox_api_key']        	= 'Secret/API key (issued by the InvoiceBox):';
 $_['invoicebox_testmode']        	= 'Test mode:';
 $_['description']        		= 'Payment description:';
 $_['status']             		= 'Status:';
-$_['status_success']     		= 'Order status after successfull payment:';
+$_['status_success']     		= 'Order status after success full payment:';
 $_['status_failed']      		= 'Order status after failed payment:';
 // Error
 $_['error_permission']   		= 'Warning: You do not have permission to modify InvoiceBox account!';
