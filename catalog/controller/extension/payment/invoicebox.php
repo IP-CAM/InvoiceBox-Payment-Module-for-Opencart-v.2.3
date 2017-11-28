@@ -14,27 +14,41 @@ class ControllerExtensionPaymentInvoicebox extends Controller {
     $data['text_testmode'] = $this->language->get('text_testmode');    
     $this->load->model('checkout/order');
     $order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
-  
+	$this->load->model('account/order');
+    $order_totals = $this->model_account_order->getOrderTotals($this->session->data['order_id']);
+	
+	$tax = 0;
+    $shipping = 0;
+	$coupon	= 0;
+    foreach ($order_totals as $order_total) {
+            if ($order_total['code'] == 'tax') {
+                $tax += $order_total['value'];
+            } elseif ($order_total['code'] == 'shipping') {
+                $shipping += $order_total['value'];
+            }elseif ($order_total['code'] == 'coupon') {
+                $coupon += $order_total['value'];
+            }
+        }
     if ($order_info) {
-	//print_r($order_info);		
-
+	
+			$kcup = ($order_info['total'] - $shipping)/$this->cart->getSubTotal();
 			$data['products'] = array();
 			$quantity = 0;
 			foreach ($this->cart->getProducts() as $product) {
 				
 				$data['products'][] = array(
 					'name'     => htmlspecialchars($product['name']),
-					'price'    => $this->currency->format($product['price'], $order_info['currency_code'], false, false),
+					'price'    => $this->currency->format(($product['price']*$product['quantity'])*$kcup/$product['quantity'], $order_info['currency_code'], false, false),
 					'quantity' => $product['quantity'],
 					'vatrate' => $this->tax->getTax( $product['price'], $product['tax_class_id'])
 				);
 				$quantity +=$product['quantity'];
 			}
 			$subtotal = $this->cart->getSubTotal();
-			if( $subtotal < $order_info['total']) {
+			if($shipping > 0) {
 				$data['products'][] = array(
 					'name'     => htmlspecialchars($order_info['shipping_method']),
-					'price'    => $this->currency->format($order_info['total'] - $subtotal, $order_info['currency_code'], false, false),
+					'price'    => $this->currency->format($shipping, $order_info['currency_code'], false, false),
 					'quantity' => 1,
 					'vatrate' => 0
 				);
