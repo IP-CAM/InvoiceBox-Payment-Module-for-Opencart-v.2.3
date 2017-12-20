@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+	<code>invoicebox_laterpay_extension_2.0-2.2</code>
+	<name> Invoicebox 2.x Laterpay Extension</name>
+	<version>1</version>
+	<author>Invoicebox</author>
+  <link>http://invoicebox.ru</link>
+
+    <file path="catalog/controller/account/order.php">
+        <operation error="log">
+            <search index="0,20"><![CDATA[$data['button_continue']]]></search>
+            <add position="before"><![CDATA[
+      //Invoicebox 2.x Laterpay Extension Begin
+      $data['button_invoicebox_onpay'] = $this->language->get('button_invoicebox_onpay');
+      $this->load->model('extension/payment/invoicebox');
+      //Invoicebox 2.x Laterpay Extension End
+            ]]></add>
+        </operation>
+        <operation error="log">
+            <search><![CDATA[$this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),]]></search>
+            <add position="after"><![CDATA[
+      //Invoicebox 2.x Laterpay Extension Begin
+      'invoicebox_onpay'  => $this->model_extension_payment_invoicebox->checkLaterpay($result['order_id']) ? $this->url->link('extension/payment/invoicebox/laterpay', sprintf('order_id=%s&order_tt=%s', $result['order_id'], $result['total'], 'SSL')) : '',
+      //Invoicebox 2.x Laterpay Extension End
+            ]]></add>
+        </operation>
+    </file>
+    <file path="catalog/language/en-gb/account/order.php">
+        <operation error="skip">
+            <search><![CDATA[$_['heading_title']]]></search>
+            <add position="before"><![CDATA[
+      //Invoicebox 2.x Laterpay Extension Begin
+      // Button
+      $_['button_invoicebox_onpay']  = 'Onpay Online via Invoicebox';
+      //Invoicebox 2.x Laterpay Extension End
+            ]]></add>
+        </operation>
+    </file>
+    <file path="catalog/language/ru-ru/account/order.php">
+        <operation error="skip">
+            <search><![CDATA[$_['heading_title']]]></search>
+            <add position="before"><![CDATA[
+      //Invoicebox 2.x Laterpay Extension Begin
+      // Button
+      $_['button_invoicebox_onpay']  = 'Оплатить онлайн';
+      //Invoicebox 2.x Laterpay Extension End
+            ]]></add>
+        </operation>
+    </file>
+    <file path="catalog/model/checkout/order.php">
+        <operation>
+            <search><![CDATA[$message .= $language->get('text_update_footer');]]></search>
+            <add position="after"><![CDATA[
+      //Invoicebox 2.x Laterpay Extension Begin
+      if ($notify) {
+      //Invoicebox 2.x Laterpay Extension End
+            ]]></add>
+        </operation>
+        <operation>
+            <search index="3"><![CDATA[$mail->send();]]></search>
+            <add position="after"><![CDATA[
+      //Invoicebox 2.x Laterpay Extension Begin
+      }
+      //Invoicebox 2.x Laterpay Extension End
+            ]]></add>
+        </operation>
+    </file>
+    <file path="catalog/view/theme/*/template/account/order_list.tpl">
+        <operation error="log">
+            <search><![CDATA[<a href="<?php echo $order['view']; ?>"]]></search>
+            <add position="replace"><![CDATA[<?php if (!empty($order['invoicebox_onpay'])) { ?><a rel="nofollow" onclick="location='<?php echo $order['invoicebox_onpay']; ?>'" data-toggle="tooltip" title="<?php echo $button_invoicebox_onpay; ?>" class="btn btn-info"><i class="fa fa-rub"></i></a>&nbsp;&nbsp;<?php } ?><a href="<?php echo $order['view']; ?>"]]></add>
+        </operation>
+    </file>
+    <file path="catalog/controller/api/order.php">
+        <operation>
+            <search><![CDATA[$this->model_checkout_order->addOrderHistory($order_id, $this->request->post['order_status_id'], $this->request->post['comment']]]></search>
+            <add position="before"><![CDATA[
+      //Invoicebox 2.x Laterpay Extension Begin
+      $this->load->language('extension/payment/invoicebox');
+      if (($this->config->get('invoicebox_order_later_status_id') == $this->request->post['order_status_id']) && ($order_info['payment_code'] == 'invoicebox')) {
+        $onpay_url = sprintf('%sindex.php/?route=extension/payment/invoicebox/laterpay&order_id=%s&order_tt=%s',
+                              defined('HTTPS_SERVER') ? HTTPS_SERVER : HTTP_SERVER,
+                              $order_info['order_id'],
+                              $order_info['total']
+                             );
+        $this->request->post['comment'] .= "\n" . sprintf($this->language->get('text_payeer_onpay'), $onpay_url);
+      }
+      $this->load->language('api/order');
+      //Invoicebox 2.x Laterpay Extension End
+            ]]></add>
+        </operation>
+    </file>
+</modification>
