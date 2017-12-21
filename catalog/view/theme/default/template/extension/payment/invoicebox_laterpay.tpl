@@ -34,7 +34,7 @@
    
 </form>
     <script type="text/javascript"><!--
-      //document.forms['checkout'].submit();
+      document.forms['checkout'].submit();
     //--></script>
   </body>
 </html>
