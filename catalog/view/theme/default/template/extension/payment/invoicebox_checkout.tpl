@@ -4,7 +4,7 @@
 <?php if ($instruction) { ?>
   <div class="well well-sm"><p><?php echo $instruction; ?></p></div>
 <?php } ?>
-<form action="<?php echo $action; ?>" method="post">
+<form action="<?php echo $action; ?>" method="post" name="checkout">
 
  <input type="hidden" name="itransfer_participant_id" value="<?php echo $invoicebox_participant_id; ?>" />
    <input type="hidden" name="itransfer_participant_ident" value="<?php echo $invoicebox_participant_ident; ?>" />
@@ -39,7 +39,7 @@
     </div>
   </div>
 </form>
-<script type="text/javascript"><!--
+<script type="text/javascript">
 $('#button-confirm').on('click', function() {
         $.ajax({
             type: 'get',
@@ -60,6 +60,6 @@ $('#button-confirm').on('click', function() {
            }
         });
     });
-//--></script>   
+</script>   
    
   

@@ -33,8 +33,8 @@
    <?php } ?>
    
 </form>
-    <script type="text/javascript"><!--
+    <script type="text/javascript">
       document.forms['checkout'].submit();
-    //--></script>
+    </script>
   </body>
 </html>
