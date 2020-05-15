@@ -171,9 +171,6 @@ class ControllerExtensionPaymentInvoicebox extends Controller {
         $data['button_continue'] = $this->language->get('button_continue');
 
         $data['continue'] = $this->url->link('common/home');
-
-
-
         $data['footer'] = $this->load->controller('common/footer');
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
@@ -404,8 +401,6 @@ class ControllerExtensionPaymentInvoicebox extends Controller {
                 return false;
             }
         }
-
-
         return true;
     }
 
@@ -422,18 +417,13 @@ class ControllerExtensionPaymentInvoicebox extends Controller {
 
     private function sendOk($order_id) {
         header('HTTP/1.1 200 OK');
-
         echo $order_id . "|success";
     }
 
     private function sendFail($order_id) {
         header('HTTP/1.1 200 OK');
-
         echo $order_id . "|error";
-        ;
     }
-
-    
 
     protected function _setData($values) {
         $this->data = array();

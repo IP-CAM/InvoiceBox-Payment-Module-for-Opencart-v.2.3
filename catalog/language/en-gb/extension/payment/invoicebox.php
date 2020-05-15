@@ -51,4 +51,3 @@ $_['text_error_post']             = 'The response from the gateway is not a POST
 $_['text_error_m_sign']           = 'Incorrect signature of the message from the payment gateway';
 $_['text_error_order_not_found']  = 'Order #%s not found';
 $_['error_fail_checkout_extension'] = 'Current checkout extension is not supported payment module!';
-?>

@@ -1,4 +1,5 @@
 <?php
+
 class ModelExtensionPaymentInvoicebox extends Model {
 	private static $_METHOD_CODE = 'invoicebox';
     public function getMethod($address, $total) {
@@ -78,4 +79,3 @@ class ModelExtensionPaymentInvoicebox extends Model {
         return false;
     }
 }
-

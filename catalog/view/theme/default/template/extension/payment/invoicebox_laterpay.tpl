@@ -3,8 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en" xml:lang="en">
   <head></head>
   <body>
-    <form action="<?php echo $action ?>" method="get" name="checkout">
- <input type="hidden" name="itransfer_participant_id" value="<?php echo $parameters['invoicebox_participant_id']; ?>" />
+  <form action="<?php echo $action ?>" method="get" name="checkout">
+   <input type="hidden" name="itransfer_participant_id" value="<?php echo $parameters['invoicebox_participant_id']; ?>" />
    <input type="hidden" name="itransfer_participant_ident" value="<?php echo $parameters['invoicebox_participant_ident']; ?>" />
    <input type="hidden" name="itransfer_participant_sign" value="<?php echo $parameters['invoicebox_sign']; ?>" />
    <input type="hidden" name="itransfer_order_id" value="<?php echo $parameters['order_id']; ?>" />

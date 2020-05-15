@@ -5,8 +5,7 @@
   <div class="well well-sm"><p><?php echo $instruction; ?></p></div>
 <?php } ?>
 <form action="<?php echo $action; ?>" method="post" name="checkout">
-
- <input type="hidden" name="itransfer_participant_id" value="<?php echo $invoicebox_participant_id; ?>" />
+   <input type="hidden" name="itransfer_participant_id" value="<?php echo $invoicebox_participant_id; ?>" />
    <input type="hidden" name="itransfer_participant_ident" value="<?php echo $invoicebox_participant_ident; ?>" />
    <input type="hidden" name="itransfer_participant_sign" value="<?php echo $invoicebox_sign; ?>" />
    <input type="hidden" name="itransfer_order_id" value="<?php echo $order_id; ?>" />
@@ -61,5 +60,3 @@ $('#button-confirm').on('click', function() {
         });
     });
 </script>   
-   
-  

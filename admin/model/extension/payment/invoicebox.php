@@ -1,5 +1,7 @@
 <?php
+
 class ModelExtensionPaymentInvoicebox extends Model {
+
     public function install() {
         $this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "invoicebox_payments` (
@@ -17,4 +19,3 @@ class ModelExtensionPaymentInvoicebox extends Model {
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "invoicebox_payments`;");
     }
 }
-?>

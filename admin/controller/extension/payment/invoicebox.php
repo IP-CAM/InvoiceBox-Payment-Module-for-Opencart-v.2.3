@@ -1,7 +1,11 @@
 <?php
+
+/*
 ini_set('error_reporting', E_ALL);
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+*/
+
 class ControllerExtensionPaymentInvoicebox extends Controller
 {
     private $error = array();
@@ -129,7 +133,6 @@ class ControllerExtensionPaymentInvoicebox extends Controller
         //button actions
         $data['action'] = $this->url->link('extension/payment/invoicebox', 'token=' . $this->session->data['token'], 'SSL');
         $data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], 'SSL');
-
 		
 		$data = array_merge($data, $this->_updateData(
             array(
@@ -160,8 +163,6 @@ class ControllerExtensionPaymentInvoicebox extends Controller
             ),
             array()
         ));
-
-        
 
         $this->load->model('localisation/order_status');
 
@@ -198,9 +199,6 @@ class ControllerExtensionPaymentInvoicebox extends Controller
         if (empty($this->request->post['invoicebox_api_key'])) {
             $this->error['invoicebox_api_key'] = $this->language->get('error_invoicebox_api_key');
         }
-		
-		
-       
 
         if (!$this->error) {
             return true;
@@ -222,8 +220,7 @@ class ControllerExtensionPaymentInvoicebox extends Controller
         }
         return $data;
     }
-	
-	
+
 	protected function _setData($values) {
         $data = array();
         foreach ($values as $key => $value) {
