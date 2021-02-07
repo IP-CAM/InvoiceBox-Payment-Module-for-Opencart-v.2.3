@@ -1,82 +1,82 @@
-# Описание платежного модуля ИнвойсБокс для OpenCart 2.3+
+# Description of the payment module InvoiceBox for OpenCart 2.3+
 
-Платёжный модуль для интеграции системы «ИнвойсБокс» и CMS OpenCart версии 2.3.
-Реализована поддержка платёжного API. Протестировано на системе OpenCart 2.3.
+Payment module for integrating the InvoiceBox system and CMS OpenCart version 2.3.
+Payment API support has been implemented. Tested on OpenCart 2.3 system.
 
-## Установка модуля
+## Installing the module
 
-1. Распакуйте архив в корень сайта;
-2. В административной панели OpenCart пройдите в раздел <strong>"Модули / Расширения" -> "Модули / Расширения" -> В фильтре выберите "Оплата"</strong>;
-3. Найдите модуль <strong>«InvoiceBox»</strong> и активируйте его в разделе <strong>Действие</strong>.
+1. Unpack the archive to the root of the site;
+2. In the administrative panel of OpenCart go to the section <strong> "Modules / Extensions" -> "Modules / Extensions" -> In the filter, select "Payment" </strong>;
+3. Find the <strong> "InvoiceBox" </strong> module and activate it in the <strong> Action </strong> section.
 
-### OCMOD функции
+### OCMOD functions
 
-Для корректной работы **отсроченной оплаты** необходимо установить OCMOD-расширение модуля.
+For ** deferred payment ** to work correctly, you need to install the OCMOD extension of the module.
 
-1. В "Панель администратора" - "Модули" - "Установка расширений" нажмите кнопку "Загрузить" и выберите файл ocmod/invoicebox_laterpay.ocmod из дистрибутива;
-2. После появления надписи "Модуль успешно установлен!" необходимо перейти в "Панель администратора" - "Модули" - "Модификаторы" и нажать кнопку "Обновить".
+1. In the "Administrator Panel" - "Modules" - "Install Extensions", click the "Download" button and select the ocmod / invoicebox_laterpay.ocmod file from the distribution kit;
+2. After the message "The module is successfully installed!" you need to go to "Admin Panel" - "Modules" - "Modifiers" and click the "Update" button.
 
-## Настройка модуля
+## Module configuration
 
-1. В административной панели OpenCart пройдите в раздел <strong>"Модули / Расширения" -> "Модули / Расширения" -> В фильтре выберите "Оплата"</strong>;
-2. Нажмите на активную кнопку редактирования;
-3. В открывшемся окне редактирования настроек заполните поля:
-    - "Идентификатор магазина"
-    - "Региональный код магазина"
-    - "Ключ безопасности магазина"
-4. Настройте статусы заказов, выбирая для каждого статус из списка возможных;
-5. Укажите порядок сортировки модуля и выберите статус для модуля: <strong>Включено</strong>.
+1. In the administrative panel of OpenCart go to the section <strong> "Modules / Extensions" -> "Modules / Extensions" -> In the filter select "Payment" </strong>;
+2. Click on the active edit button;
+3. In the settings editing window that opens, fill in the fields:
+    - "Shop ID"
+    - "Regional store code"
+    - "Store security key"
+4. Set up the statuses of orders, choosing for each status from the list of possible ones;
+5. Specify the sorting order for the module and select the status for the module: <strong> Enabled </strong>.
 
-### Специфические настройки 
+### Specific settings
 
-Тестовый режим - включите его для проведения тестовых платежей, при включении этого режима, вы пройдете все шаги в платежном терминале «ИнвойсБокс»,
-но деньги с вашей карты списаны не будут.
+Test mode - enable it to make test payments, when you enable this mode, you will go through all the steps in the "InvoiceBox" payment terminal,
+but money will not be debited from your card.
 
-Статус заказа после оплаты - После успешной оплаты заказа, заказу будет установлен выбранный статус.
-	
-Статус заказа после подтверждения - При нажатии на кнопку "Подтвердить" на последнем этапе оформления заказа, заказу будет установлен выбранный статус.
+Order status after payment - After successful payment of the order, the order will be set to the selected status.
+
+Order status after confirmation - When you click on the "Confirm" button at the last stage of ordering, the order will be set to the selected status.
    
-Статус заказа после неудачной оплаты - Если «ИнвойсБокс» вернёт покупателя после неудачного платежа, заказу будет установлен выбранный статус.
+Order status after unsuccessful payment - If "InvoiceBox" returns the buyer after unsuccessful payment, the order will be set to the selected status.
     
-Статус заказа для отсроченной оплаты -  После проверки заказа менеджер магазина выставит данный статус, покупатель будет уведомлен по электронной почте и
-сможет оплатить заказ. Также, ссылка на оплату появится в личном кабинете покупателя в разделе "Мои заказы".
+Order status for deferred payment - After checking the order, the store manager will set this status, the buyer will be notified by email and
+will be able to pay for the order. Also, a link to payment will appear in the buyer's personal account in the "My orders" section.
 
-БУДЬТЕ ВНИМАТЕЛЬНЫ!
-Если данный статус будет совпадать со "статус заказа после подтверждения" - режим отсроченной оплаты будет отключён и покупатели будут перенаправляться на
-сайт «ИнвойсБокс» для оплаты сразу после нажатия на кнопку "Оформить заказ".
+BE CAREFUL!
+If this status matches the "order status after confirmation" - the deferred payment mode will be disabled and customers will be redirected to
+website "InvoiceBox" for payment immediately after clicking on the "Checkout" button.
     
-Режим отсроченной оплаты - При включённом режиме отсроченной (отложенной) оплаты покупатель сможет оплатить заказ только после проверки заказа менеджером магазина.
-Если вам необходимо, чтобы у покупателя была возможность произвести оплату сразу после оформления заказа без подтверждения менеджером - не включайте эту опцию.
+Deferred payment mode - When the deferred (deferred) payment mode is enabled, the buyer can pay for the order only after the order is checked by the store manager.
+If you need the buyer to be able to make a payment immediately after placing the order without confirmation by the manager, do not enable this option.
 
-Название - Название метода оплаты на странице оформления заказа.
+Title - The name of the payment method on the checkout page.
     
-Инструкция по оплате - Инструкция по оплате выводится при подтверждении заказа. Если поле не заполнено - инструкция по оплате выводиться не будет.
+Payment instructions - Payment instructions are displayed upon order confirmation. If the field is not filled in, payment instructions will not be displayed.
 
-Отображать иконку "Оплатить заказ" в ЛК покупателя, если оплата заказа прервана.
+Display the "Pay for order" icon in the buyer's personal account if payment for the order is interrupted.
 
-Как это работает? Покупатель перешел на сайт платежной системы и не стал оплачивать заказ (передумал, не хватило денег, отключили электричество в
-доме или офисе и пр.). Тогда в его Личном Кабинете (ЛК) в списке истории заказов появится иконка "P", нажав на которую покупатель сможет снова
-попробовать оплатить свой заказ. Иконка появится только в том случае, если текущий статус заказа покупателя совпадает со статусом заказа, указанных
-в полях "Статус заказа после подтверждения" и "Статус заказа после неудачной оплаты".
+How it works? The buyer went to the website of the payment system and did not pay for the order (changed his mind, did not have enough money, cut off the electricity in
+home or office, etc.). Then an icon "P" will appear in his Personal Account (LC) in the order history list, by clicking on which the buyer can again
+try to pay for your order. The icon will appear only if the current status of the buyer's order matches the status of the order specified
+in the fields "Order status after confirmation" and "Order status after unsuccessful payment".
     
-Текст кнопки button_confirm ("Потвердить заказ") - Кнопка выводится на последнем этапе оформления заказа. При нажатии на нее заказ будет сформирован
-окончательно и покупатель будет отправлен для оплаты на сайт платёжной системы (если режим отсроченной оплаты отключен).
+Button text button_confirm ("Confirm order") - The button is displayed at the last stage of ordering. When you click on it, the order will be generated
+finally, and the buyer will be sent for payment to the payment system website (if the deferred payment mode is disabled).
 
-### Настройка панели ИнвойсБокс:
+### Setting up the InvoiceBox panel:
 
-1. Для настройки панели управления «ИнвойсБокс» пройдите по url - https://login.invoicebox.ru/ ;
-2. Авторизуйтесь и пройдите в раздел "Мои магазины". "Начало работы" -> "Настройки" -> "Мои магазины";
-3. Пройдите по вкладку "Уведомления по протоколу" -> выберите "Тип уведомления" "Оплата/HTTP/Post (HTTP POST запрос с данными оплаты в переменных)"
-4. В поле "URL уведомления" укажите:
+1. To configure the control panel "InvoiceBox" go to the url - https://login.invoicebox.ru/;
+2. Log in and go to the "My Stores" section. "Getting Started" -> "Settings" -> "My Stores";
+3. Go to the "Protocol notifications" tab -> select "Notification type" "Payment / HTTP / Post (HTTP POST request with payment data in variables)"
+4. In the "Notification URL" field, enter:
 
-    `<домен_сайта>/index.php?route=extension/payment/invoicebox/callback`
+    `<site_domain> /index.php? route = extension / payment / invoicebox / callback`
 
-5. Сохраните изменения.
+5. Save your changes.
 
 
-### Часто-задаваемые вопросы
+### Frequently asked Questions
 
-Вопрос: При выборе способа оплаты, заказ исчезает из панель управления магазином, даже если клиент оплатил данный заказ;
-Ответ: Проверьте корректность указания ссылка уведомления об оплате в личном кабинете системы ИнвойсБокс.
-Заказ отображается в панели управления магазином только в том случае, если система оплаты корректно передала магазину
-информацию об оплате заказа.
+Question: When choosing a payment method, the order disappears from the store control panel, even if the client paid for the order;
+Answer: Check the correctness of the payment notification link in the personal account of the InvoiceBox system.
+The order is displayed in the control panel of the store only if the payment system has correctly transmitted to the store
+payment information 
